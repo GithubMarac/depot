@@ -11,3 +11,9 @@ two:
   description: MyText
   image_url: http://image.com/image.gif
   price: 9.99
+
+three:
+  title: Neki title
+  description: Neki opis
+  image_url: http://image.com/image.gif
+  price: 9.99

@@ -8,6 +8,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get products_url
+
+    assert_select '.actions ul li a', 'Edit'
+    assert_select '.actions ul li a', 'Show'
     assert_response :success
   end
 
@@ -26,6 +29,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show product" do
     get product_url(@product)
+    assert_select
     assert_response :success
   end
 
