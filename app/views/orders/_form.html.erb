@@ -26,7 +26,21 @@
     <%= form.text_field :email %>
   </div>
 
-  <div id='pay-type-component'></div>
+  <div class="field">
+    <%= form.text_field :pay_type %>
+    <%= form.select(:pay_type, [['Credit Card','Credit Card']])%>
+  </div>
+
+  <div class="field">
+    <%= form.label :credit_card_number %>
+    <%= form.text_field :credit_card_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expiration_date %>
+    <%= form.text_field :expiration_date %>
+  </div>
+
 
   <div class="actions">
     <%= form.submit 'Place order' %>
