@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :deny_acces_to_other_carts
   skip_before_action :authorize, only: [:create, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
@@ -12,6 +13,7 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+
   end
 
   # GET /carts/new
@@ -67,12 +69,14 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
+
       @cart = Cart.find(params[:id])
+
     end
 
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.fetch(:cart, {})
+      params.fetch(:cart, {}).permit(:id)
     end
 
   def invalid_cart
@@ -82,5 +86,14 @@ class CartsController < ApplicationController
 
   def total_price
     line_items.to_a.sum { |item| item.total_price }
+  end
+
+  def deny_acces_to_other_carts
+    puts "string"
+    puts session[:cart_id]
+    puts params[:id].to_i
+    if session[:cart_id] != params[:id].to_i
+      raise "Raise an exception"
+    end
   end
 end
