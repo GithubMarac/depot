@@ -6,5 +6,6 @@
     <td class="quantity"><%= line_item.quantity %></td>
     <td><%= line_item.product.title %></td>
     <td class="price"><%= number_to_currency(line_item.total_price) %></td>
-    <td> <%= button_to "-", set_quantity_line_item_path(line_item), method: :put %></td>
+    <% if current_page?(store_index_url) %><td> <%= button_to "-", set_quantity_line_item_path(line_item), method: :put, remote: true %></td><% end %>
 </tr>
+

@@ -30,7 +30,7 @@ test "price should be positive" do
                           image_url: "http://image.com/image.gif")
     product.price = -1
     assert product.invalid?
-    assert_equal ["must be greater than or equal 0.01"],
+    assert_equal ["must be greater than or equal to 0.01"],
     product.errors[:price]
 
     product.price = 1

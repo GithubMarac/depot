@@ -67,7 +67,8 @@ class LineItemsController < ApplicationController
     @line_item.quantity =  @line_item.quantity - 1
     respond_to do |format|
     if @line_item.save
-      format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+      format.html { redirect_to store_index_url }
+      format.js { }
       format.json { render :show, status: :ok, location: @line_item }
     else
       format.html { render :edit }

@@ -29,7 +29,6 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show product" do
     get product_url(@product)
-    assert_select
     assert_response :success
   end
 
@@ -53,14 +52,14 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
   test 'cant delete product in cart' do
     assert_difference('Product.count', 0) do
-      delete product_url(@product)
+      delete product_url(:two)
     end
 
     assert_redirected_to products_url
   end
 
-  test 'sgould delete product in cart' do
-    assert_difference('Product.count'. -1) do
+  test 'should delete product in cart' do
+    assert_difference('Product.count', -1) do
       delete product_url(@product)
     end
 

@@ -22,7 +22,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
 
-    assert_select 'li',  "1 \u00D7 Chatbot Interactions"
+    assert_select 'h2', "Your Cart"
 
 
   end

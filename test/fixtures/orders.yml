@@ -1,13 +1,26 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Programing Ruby
   address: MyText
   email: mario.probst2@gmail.com
   pay_type: 1
 
 two:
-  name: MyString
+  name: Programing Ruby
   address: MyText
-  email: email@email.com
+  email: mario.probst2@gmail.com
   pay_type: 1
+
+another_one:
+  name: Dave
+  address: Address
+  email: dave@dave.com
+  pay_type: "Check"
+  created_at: <%= 2.days.ago %>
+
+other_customer:
+  name: Chris
+  address: Address2
+  email: chris@chris.com
+  pay_type: "Check"
