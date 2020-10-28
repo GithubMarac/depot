@@ -34,6 +34,7 @@ class LineItemsController < ApplicationController
   def create
     product = Product.find(params[:product_id])
     @line_item = @cart.add_product(product)
+    session[:counter] = 0
 
     respond_to do |format|
       if @line_item.save
@@ -52,9 +53,10 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
 
-      if @line_item.update(line_item_params)
+      if @line_item.update
 
         format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+        format.js
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit }
@@ -63,30 +65,39 @@ class LineItemsController < ApplicationController
     end
   end
 
-  def set_quantity
-    @line_item.quantity =  @line_item.quantity - 1
-    respond_to do |format|
-    if @line_item.save
-      format.html { redirect_to store_index_url }
-      format.js { }
-      format.json { render :show, status: :ok, location: @line_item }
-    else
-      format.html { render :edit }
-      format.json { render json: @line_item.errors, status: :unprocessable_entity }
-    end
-    end
-  end
+
 
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
-    @line_item.destroy
-    respond_to do |format|
-      format.html { redirect_to line_items_url, notice: 'Line item was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
+    puts "string"
+    line_item = LineItem.find(params[:id])
+    product = Product.find(line_item[:product_id])
 
+    @cart = Cart.find(line_item[:cart_id])
+
+
+
+
+
+    @line_item = @cart.remove_product(product)
+    puts @line_item.quantity
+
+
+      respond_to do |format|
+        if @line_item.save
+          format.html { redirect_to store_index_url }
+          format.js { @current_item = @line_item }
+          format.json { render :show, status: :created, location: @line_item }
+        else
+          format.html { render :new }
+          format.json { render json: @line_item.errors, status: :unprocessable_entity }
+        end
+
+
+    end
+
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -96,6 +107,7 @@ class LineItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def line_item_params
+
       params.require(:line_item).permit(:product_id)
     end
 

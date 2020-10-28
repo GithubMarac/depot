@@ -11,13 +11,12 @@ Rails.application.routes.draw do
   resources :support_requests, only: [:index, :update]
   resources :users
   resources :orders
-  resources :line_items do
-    put :set_quantity, on: :member
-  end
+  resources :line_items
   root 'store#index', as: 'store_index'
   resources :carts
   resources :products do
     get :who_bought, on: :member
+    put :set_quantity, on: :member
   end
 
 
