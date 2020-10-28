@@ -81,7 +81,7 @@ class LineItemsController < ApplicationController
 
 
     @line_item = @cart.remove_product(product)
-    puts @line_item.quantity
+
 
 
       respond_to do |format|
