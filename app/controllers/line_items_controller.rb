@@ -1,7 +1,7 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :set_quantity]
+  before_action :set_cart, only: [:create, :destroy]
+  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :destroy]
   skip_before_action :authorize, only: :create
 
 
@@ -74,7 +74,7 @@ class LineItemsController < ApplicationController
     line_item = LineItem.find(params[:id])
     product = Product.find(line_item[:product_id])
 
-    @cart = Cart.find(line_item[:cart_id])
+
 
 
 
@@ -82,10 +82,17 @@ class LineItemsController < ApplicationController
 
     @line_item = @cart.remove_product(product)
 
+    if @line_item.quantity == 0
+      @line_item.delete
+    else
+      @line_item.save
+    end
+
+
 
 
       respond_to do |format|
-        if @line_item.save
+        if @cart.save
           format.html { redirect_to store_index_url }
           format.js { @current_item = @line_item }
           format.json { render :show, status: :created, location: @line_item }

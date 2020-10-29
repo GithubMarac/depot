@@ -1,4 +1,6 @@
-<article>
+<% if @cart.total_price != 0.00 %>
+
+<article id="article">
   <% if notice %>
     <aside id="notice"><%= notice %></aside>
   <% end %>
@@ -25,3 +27,4 @@
   <% end %>
 
 </article>
+<% end %>
